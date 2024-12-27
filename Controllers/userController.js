@@ -7,11 +7,11 @@ exports.register = async (req, res) => {
   try {
     const { username, contact, email, password } = req.body;
     if (!username || !contact || !email || !password) {
-      res.status(401).send({ message: "all feilds are requird" });
+      return res.status(401).send({ message: "all feilds are requird" });
     }
     const existinguser = await User.findOne({ email });
     if (existinguser) {
-      res.status(401).send({ message: "user alredy exist" });
+      return res.status(401).send({ message: "user alredy exist" });
     }
 
     const hashpassword = await bcrypt.hash(password, 10);
@@ -24,7 +24,9 @@ exports.register = async (req, res) => {
     await newuser.save();
     res.status(200).send("User Registration Done");
   } catch (error) {
-    res.status(400).send({ message: "User registration fail", error: error });
+    return res
+      .status(400)
+      .send({ message: "User registration fail", error: error });
   }
 };
 
@@ -32,13 +34,13 @@ exports.Login = async (req, res) => {
   try {
     const { email, password } = req.body;
     if ((!email, !password)) {
-      res.status(401).send("invallid credencial");
+      return res.status(401).send("invallid credencial");
     }
     const user = await User.findOne({ email });
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      res.status(401).send("invalid password");
+      return res.status(401).send("invalid password");
     }
     const token = jwt.sign(
       {
@@ -52,7 +54,7 @@ exports.Login = async (req, res) => {
       { expiresIn: "1hrs" }
     );
     if (user) {
-      res.status(200).send({
+      return res.status(200).send({
         message: "user login successful",
         token,
         user: {
