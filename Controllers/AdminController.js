@@ -1,4 +1,5 @@
 const insertData = require("../Model/AdminModel");
+
 exports.RowData = async (req, res) => {
   try {
     const { title, price, description } = req.body;
