@@ -1,9 +1,9 @@
-const insertData = require("../Model/AdminModel");
-
+const Product = require("../Model/AdminModel");
+const mongoose = require("mongoose");
 exports.RowData = async (req, res) => {
   try {
     const { title, price, description } = req.body;
-    const data = new insertData({
+    const data = new Product({
       title,
       price,
       description,
@@ -17,7 +17,7 @@ exports.RowData = async (req, res) => {
 };
 exports.getData = async (req, res) => {
   try {
-    const admindata = await insertData.find();
+    const admindata = await Product.find();
     const dataWithLinks = admindata.map((item) => ({
       ...item._doc,
       Image: `http://localhost:8001/uploads/${item.Image}`, // Ensure path is correct
@@ -44,7 +44,7 @@ exports.id = async (req, res) => {
   }
 
   try {
-    const product = await insertData.findById(id); // Use `id` to fetch data
+    const product = await Product.findById(id); // Use `id` to fetch data
 
     if (!product) {
       return res
