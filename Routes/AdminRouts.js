@@ -1,12 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const AdminController = require("../Controllers/AdminController");
-const CartController = require("../Controllers/CartController");
-const Authontication = require("../Midlware/Athontication");
 const upload = require("../Midlware/Multer");
 router.post("/AddProduct", upload.array("Image", 10), AdminController.RowData);
 router.get("/getProduct", upload.array("Image", 10), AdminController.getData);
 router.get("/:id", upload.array("Image", 10), AdminController.id);
-router.post("/AddToCart", CartController.addToCart);
-router.get("/GetCart", AdminController.getData);
 module.exports = router;
