@@ -13,6 +13,8 @@ const CartSchema = mongoose.Schema({
     },
   ],
   updatedAt: { type: Date, default: Date.now },
+  totalQuantity: { type: Number, default: 0 },
+  totalPrice: { type: Number, default: 0 },
 });
 
 module.exports = mongoose.model("Cart", CartSchema);
