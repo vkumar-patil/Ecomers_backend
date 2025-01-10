@@ -14,10 +14,11 @@ router.put(
   authenticate,
   cartController.updateCartProduct
 );
-router.put(
+router.delete(
   "/delete-cart-item/:productID",
   authenticate,
   cartController.deleteCartItem
 );
+router.delete("/Clear", authenticate, cartController.ClearCart);
 
 module.exports = router;
