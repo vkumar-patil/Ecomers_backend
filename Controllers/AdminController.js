@@ -1,5 +1,6 @@
 const Product = require("../Model/AdminModel");
-const mongoose = require("mongoose");
+const { updateCartProduct } = require("./CartController");
+
 exports.RowData = async (req, res) => {
   try {
     const { title, price, description } = req.body;
@@ -64,5 +65,44 @@ exports.id = async (req, res) => {
   } catch (error) {
     console.error("Error fetching product:", error);
     res.status(500).send({ message: "Server error while fetching product" });
+  }
+};
+
+exports.deleteItem = async (req, res) => {
+  try {
+    const { id } = req.params; // Ensure the parameter name is consistent
+    console.log("Received Product ID:", id);
+
+    // Check if the product exists and delete it
+    const product = await Product.findByIdAndDelete(id);
+
+    if (!product) {
+      return res.status(404).send({ message: "Product not found" });
+    }
+
+    console.log("Deleted Product:", product);
+    res.status(200).send({ message: "Product deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting product:", error);
+    res.status(500).send({ message: "Server error while deleting product" });
+  }
+};
+exports.UpdateProduct = async (req, res) => {
+  const { id } = req.params;
+  const { title, price, discription } = req.body;
+  const updateData = { title, price, discription };
+  if (req.file && req.file.length > 0) {
+    updateData.Image = req.files.map((file) => file.filename);
+  }
+  try {
+    const updatProduct = Product.findAndUpdate(id, updateData, { new: true });
+    if (!updatProduct) {
+      res.status(400).send({ message: "product not found" });
+    }
+    res
+      .status(200)
+      .send({ message: "Product Update Successfully", product: updatProduct });
+  } catch (error) {
+    res.status(500).send(error);
   }
 };
