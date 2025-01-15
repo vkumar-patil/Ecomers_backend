@@ -91,18 +91,27 @@ exports.UpdateProduct = async (req, res) => {
   const { id } = req.params;
   const { title, price, discription } = req.body;
   const updateData = { title, price, discription };
-  if (req.file && req.file.length > 0) {
-    updateData.Image = req.files.map((file) => file.filename);
-  }
+
   try {
-    const updatProduct = Product.findAndUpdate(id, updateData, { new: true });
-    if (!updatProduct) {
-      res.status(400).send({ message: "product not found" });
+    if (req.file && req.file.length > 0) {
+      updateData.Image = req.files.map((file) => file.filename);
     }
+
+    // Find and update the product by id
+    const updatProduct = await Product.findByIdAndUpdate(id, updateData, {
+      new: true,
+    });
+
+    if (!updatProduct) {
+      return res.status(404).send({ message: "Product not found" });
+    }
+
     res
       .status(200)
-      .send({ message: "Product Update Successfully", product: updatProduct });
+      .send({ message: "Product updated successfully", product: updatProduct });
   } catch (error) {
-    res.status(500).send(error);
+    res
+      .status(500)
+      .send({ message: "Internal Server Error", error: error.message });
   }
 };
