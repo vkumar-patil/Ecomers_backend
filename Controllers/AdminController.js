@@ -1,5 +1,4 @@
 const Product = require("../Model/AdminModel");
-const { updateCartProduct } = require("./CartController");
 
 exports.RowData = async (req, res) => {
   try {
