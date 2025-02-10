@@ -12,18 +12,18 @@
 //     }
 //   };
 
-const Rate = require("../Model/RatingModel");
-exports.Addrating = async (req, res) => {
-  try {
-    const { productID, userID, rating, review } = req.body;
-    const Rating = new Rate({ productID, userID, rating, review });
-    await Rating.save();
-    if (!Rating > 0) {
-      res.status(400).send({ message: "rating not submited " });
-    } else {
-      res.status(200).send({ message: "rating Submited" });
-    }
-  } catch (error) {
-    res.status(500).send({ error: error });
-  }
-};
+// const Rate = require("../Model/RatingModel");
+// exports.Addrating = async (req, res) => {
+//   try {
+//     const { productID, userID, rating, review } = req.body;
+//     const Rating = new Rate({ productID, userID, rating, review });
+//     await Rating.save();
+//     if (!Rating > 0) {
+//       res.status(400).send({ message: "rating not submited " });
+//     } else {
+//       res.status(200).send({ message: "rating Submited" });
+//     }
+//   } catch (error) {
+//     res.status(500).send({ error: error });
+//   }
+// };

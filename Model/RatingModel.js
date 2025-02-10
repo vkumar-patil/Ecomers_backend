@@ -32,14 +32,14 @@
 
 // module.exports = Rating;
 
-const mongoose = require("mongoose");
-const RateSchema = mongoose.Schema(
-  {
-    productID: { type: mongoose.Schema.ObjectId, ref: Product, require: true },
-    userID: { type: String, require: true },
-    rating: { type: Number, require: true, min: 1, max: 5 },
-    review: { type: String, require: true },
-  },
-  { timestamps: true }
-);
-exports.module = mongoose.model("Rate", RateSchema);
+// const mongoose = require("mongoose");
+// const RateSchema = mongoose.Schema(
+//   {
+//     productID: { type: mongoose.Schema.ObjectId, ref: Product, require: true },
+//     userID: { type: String, require: true },
+//     rating: { type: Number, require: true, min: 1, max: 5 },
+//     review: { type: String, require: true },
+//   },
+//   { timestamps: true }
+// );
+// exports.module = mongoose.model("Rate", RateSchema);
